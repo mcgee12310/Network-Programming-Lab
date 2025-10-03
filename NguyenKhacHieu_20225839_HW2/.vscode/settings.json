@@ -1,0 +1,7 @@
+{
+  "files.associations": {
+    "netdb.h": "c",
+    "regex.h": "c",
+    "socket.h": "c"
+  }
+}
