@@ -25,7 +25,7 @@ int is_valid_ipv4(const char *ip)
  */
 int is_valid_domain(const char *domain) {
     int len = strlen(domain);
-    if (len == 0 || len > 253) return 0;
+    if (len == 0 || len > 255) return 0;
 
     int label_len = 0;
     int has_dot = 0;
@@ -39,7 +39,7 @@ int is_valid_domain(const char *domain) {
             label_len = 0;
             has_dot = 1;
         } else {
-            if (!(isalnum((unsigned char)c) || c == '-')) return 0;
+            if (!(isalnum(c) || c == '-')) return 0;
             label_len++;
             if (label_len > 63) return 0;
         }
@@ -52,9 +52,9 @@ int is_valid_domain(const char *domain) {
 }
 
 /**
- * @param ip The IPv4 address to resolve
  * This function resolves the given IPv4 address to its corresponding hostname
  * and prints the result
+ * @param ip The IPv4 address to resolve
  * @return The resolved hostname or "Not found information" if resolution fails
  */
 void resolve_ip(const char *ip)
@@ -75,9 +75,9 @@ void resolve_ip(const char *ip)
 }
 
 /**
- * @param domain The domain name to resolve
  * This function resolves the given domain name to its corresponding IPv4 addresses
  * and prints the results
+ * @param domain The domain name to resolve
  * @return The resolved IPv4 addresses or "Not found information" if resolution fails
  */
 void resolve_domain(const char *domain)
@@ -108,10 +108,10 @@ void resolve_domain(const char *domain)
 }
 
 /**
- * @param argc The number of command-line arguments
- * @param argv The array of command-line argument strings
  * This is the main function that processes command-line arguments and calls
  * the appropriate functions to resolve IP addresses or domain names
+ * @param argc The number of command-line arguments
+ * @param argv The array of command-line argument strings
  * @return 0 on success, 1 on failure
  */
 int main(int argc, char *argv[])

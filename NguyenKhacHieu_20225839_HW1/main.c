@@ -17,8 +17,8 @@
 #define RESULT_ERR "-ERR"
 
 /**
-* @brief Account structure to hold username and status.
-*/
+ * @brief Account structure to hold username and status.
+ */
 typedef struct
 {
     char username[MAX_USERNAME_LENGTH];
@@ -35,10 +35,10 @@ char cmd[MAX_CMD_LENGTH];
 int choice;
 
 /**
-* @brief Loads account information from a file into the accounts array.
-* @param filename The name of the file to read account data from.
-* @param accounts The array to store loaded account information.
-*/
+ * @brief Loads account information from a file into the accounts array.
+ * @param filename The name of the file to read account data from.
+ * @param accounts The array to store loaded account information.
+ */
 void load_accounts(const char *filename, Account accounts[])
 {
     FILE *f = fopen(filename, "r");
@@ -58,12 +58,12 @@ void load_accounts(const char *filename, Account accounts[])
 }
 
 /**
-* @brief Writes user's activities to the log file.
-* @param choice The feature made by the user.
-* @param user_input The user input to the above feature.
-* @param result The result of the feature. +OK or -ERR.
-* @return New log in the log file.
-*/
+ * @brief Writes user's activities to the log file.
+ * @param choice The feature made by the user.
+ * @param user_input The user input to the above feature.
+ * @param result The result of the feature. +OK or -ERR.
+ * @return New log in the log file.
+ */
 void write_log(const int choice, char *user_input, const char *result)
 {
     time_t now;
@@ -88,10 +88,10 @@ void write_log(const int choice, char *user_input, const char *result)
 }
 
 /**
-* @brief Check account and status, then authorize user.
-* @param log_in_username The username input by the user for login.
-* @return Result of authorization process.
-*/
+ * @brief Check account and status, then authorize user.
+ * @param log_in_username The username input by the user for login.
+ * @return Result of authorization process.
+ */
 void authorize_user(char *log_in_username)
 {
     bool found = false;
@@ -122,9 +122,9 @@ void authorize_user(char *log_in_username)
 }
 
 /**
-* @brief Check if a user is currently logged in.
-* @return true if a user is logged in, false otherwise.
-*/
+ * @brief Check if a user is currently logged in.
+ * @return true if a user is logged in, false otherwise.
+ */
 bool logged_in_user()
 {
     if (strlen(current_user) > 0)
@@ -134,10 +134,10 @@ bool logged_in_user()
 }
 
 /**
-* @brief Get username input and handle login process.
-* @param log_in_username The username input by the user for login.
-* @return Result of login process.
-*/
+ * @brief Get username input and handle login process.
+ * @param log_in_username The username input by the user for login.
+ * @return Result of login process.
+ */
 void log_in()
 {
     char log_in_username[MAX_USERNAME_LENGTH];
@@ -156,9 +156,9 @@ void log_in()
 }
 
 /**
-* @brief Log out the current user if logged in.
-* @return Result of logout process.
-*/
+ * @brief Log out the current user if logged in.
+ * @return Result of logout process.
+ */
 void log_out()
 {
     if (logged_in_user())
@@ -177,10 +177,10 @@ void log_out()
 }
 
 /**
-* @brief Get message input and handle posting process.
-* @param message The message input by the user for posting.
-* @return Result of posting process.
-*/
+ * @brief Get message input and handle posting process.
+ * @param message The message input by the user for posting.
+ * @return Result of posting process.
+ */
 void post_message()
 {
     char message[MAX_MESSAGE_LENGTH];
@@ -201,10 +201,10 @@ void post_message()
 }
 
 /**
-* @brief The main function that drives the program, providing a menu for user interaction.
-* @param cmd The command input by the user.
-* @param choice The feature choice made by the user.
-*/
+ * @brief The main function that drives the program, providing a menu for user interaction.
+ * @param cmd The command input by the user.
+ * @param choice The feature choice made by the user.
+ */
 int main()
 {
     load_accounts(FILE_ACCOUNT, accounts);

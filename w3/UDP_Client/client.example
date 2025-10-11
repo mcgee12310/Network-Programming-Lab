@@ -1,0 +1,74 @@
+// UDP Client
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <errno.h>
+#include <unistd.h>
+#include <sys/types.h>
+#include <sys/socket.h>
+#include <netinet/in.h>
+#include <arpa/inet.h>
+
+#define SERV_PORT 5550 /* Port that will be opened */
+#define SERV_IP "127.0.0.1"
+#define BUFF_SIZE 8193
+
+int main()
+{
+  int client_sock;
+  char buff[BUFF_SIZE];
+  struct sockaddr_in server_addr;
+  int sent_bytes, received_bytes;
+  socklen_t sin_size;
+
+  // Step 1: Construct a UDP socket
+  if ((client_sock = socket(AF_INET, SOCK_DGRAM, 0)) < 0)
+  {
+    perror("socket() error: ");
+    exit(1);
+  }
+
+  // Step 2: Define the address of the server
+  bzero(&server_addr, sizeof(server_addr));
+  server_addr.sin_family = AF_INET;
+  server_addr.sin_port = htons(SERV_PORT);
+  server_addr.sin_addr.s_addr = inet_addr(SERV_IP);
+
+  // Step 3: Communicate with server
+  printf("\nInsert string to send: ");
+
+  if (fgets(buff, BUFF_SIZE, stdin) == NULL)
+  {
+    perror("fgets() error: ");
+    close(client_sock);
+    exit(1);
+  }
+
+  buff[strcspn(buff, "\n")] = 0;
+
+  sin_size = sizeof(struct sockaddr);
+
+  sent_bytes = sendto(client_sock, buff, strlen(buff), 0, (struct sockaddr *)&server_addr, sin_size);
+
+  if (sent_bytes < 0)
+  {
+    perror("sendto () error: ");
+  }
+  else
+  {
+    received_bytes = recvfrom(client_sock, buff, BUFF_SIZE - 1, 0, (struct sockaddr *)&server_addr, &sin_size);
+
+    if (received_bytes < 0)
+    {
+      perror("recvfrom() error: ");
+    }
+    else
+    {
+      buff[received_bytes] = '\0';
+      printf("Reply from server: %s\n", buff);
+    }
+  }
+
+  close(client_sock);
+  return 0;
+}
