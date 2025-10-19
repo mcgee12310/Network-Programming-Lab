@@ -1,0 +1,6 @@
+{
+  "files.associations": {
+    "resolver.h": "c",
+    "socket.h": "c"
+  }
+}

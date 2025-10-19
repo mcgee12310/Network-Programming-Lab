@@ -128,7 +128,7 @@ int main(int argc, char *argv[])
     printf("Input message: ");
     if (fgets(buff, BUFF_SIZE, stdin) == NULL)
     {
-      break; // EOF
+      break;
     }
 
     buff[strcspn(buff, "\n")] = 0;
