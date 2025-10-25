@@ -174,7 +174,7 @@ void communicate()
             }
             else
             {
-            	printf("Client %s:%d: %s\n", client_ip, client_port, recv_data);
+                printf("Client %s:%d: %s\n", client_ip, client_port, recv_data);
                 send(conn_sock, OK_SEND_FILE_MSG, strlen(OK_SEND_FILE_MSG), 0);
                 write_log(recv_data, OK_SEND_FILE_MSG);
             }

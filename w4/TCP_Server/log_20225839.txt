@@ -112,3 +112,15 @@
 [19/10/2025 04:25:01]$127.0.0.1:45488$+OK Welcome to file server
 [19/10/2025 04:25:05]$127.0.0.1:45488$UPLD test.zip 7479$+OK Please send file
 [19/10/2025 04:25:05]$127.0.0.1:45488$UPLD test.zip 7479$+OK Successful upload
+[19/10/2025 11:29:11]$127.0.0.1:37878$+OK Welcome to file server
+[19/10/2025 11:29:34]$127.0.0.1:37878$UPLD test.jpeg 4103$+OK Please send file
+[19/10/2025 11:29:34]$127.0.0.1:37878$UPLD test.jpeg 4103$+OK Successful upload
+[19/10/2025 11:30:10]$127.0.0.1:45400$+OK Welcome to file server
+[19/10/2025 11:30:22]$127.0.0.1:45400$UPLD test.txt 117645$+OK Please send file
+[19/10/2025 11:30:22]$127.0.0.1:45400$UPLD test.txt 117645$+OK Successful upload
+[19/10/2025 11:30:24]$127.0.0.1:57560$+OK Welcome to file server
+[19/10/2025 11:30:30]$127.0.0.1:57560$UPLD test.zip 7479$+OK Please send file
+[19/10/2025 11:30:30]$127.0.0.1:57560$UPLD test.zip 7479$+OK Successful upload
+[20/10/2025 01:49:27]$127.0.0.1:42168$+OK Welcome to file server
+[20/10/2025 01:49:32]$127.0.0.1:42168$UPLD test.txt 117645$+OK Please send file
+[20/10/2025 01:49:32]$127.0.0.1:42168$UPLD test.txt 117645$+OK Successful upload

@@ -84,7 +84,7 @@ void setup_socket(char *ip, char *port)
 }
 
 /**
- * @brief Communicates with the server to send files. Enter file paths to send files. 
+ * @brief Communicates with the server to send files. Enter file paths to send files.
  * File's size is determined automatically. Blank input exits the program.
  * @param filename The name of the file to be sent.
  */
