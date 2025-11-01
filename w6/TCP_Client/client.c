@@ -11,10 +11,12 @@
 #include <sys/stat.h>
 
 #define BUFF_SIZE 4096
+#define CHUNK_SIZE 65536
 #define MAX_CMD_LENGTH 1000
 
 int client_sock;
 char buff[BUFF_SIZE + 1];
+char mess[CHUNK_SIZE];
 struct sockaddr_in server_addr; /* server's address information */
 int sent_bytes, received_bytes;
 char cmd[MAX_CMD_LENGTH];
@@ -23,44 +25,48 @@ char cmd[MAX_CMD_LENGTH];
  * @brief Handles and displays the server's response message. Eliminates the status code prefix.
  * @param response The response message from the server.
  */
-void handle_server_response()
+void handle_server_response(char *buffer)
 {
     printf("\n=> Server response: ");
-    buff[received_bytes] = '\0';
+    buffer[strcspn(buffer, "\r\n")] = '\0'; // Remove trailing \r\n
 
-    if (strcmp(buff, "100") == 0)
+    if (strcmp(buffer, "100") == 0)
     {
         printf("Connected to server successfully!\n");
     }
-    else if (strcmp(buff, "110") == 0)
+    else if (strcmp(buffer, "110") == 0)
     {
         printf("Logged in successfully!\n");
     }
-    else if (strcmp(buff, "211") == 0)
+    else if (strcmp(buffer, "211") == 0)
     {
         printf("Account is banned. Login failed.\n");
     }
-    else if (strcmp(buff, "212") == 0)
+    else if (strcmp(buffer, "212") == 0)
     {
         printf("Unknown account. Login failed.\n");
     }
-    else if (strcmp(buff, "213") == 0)
+    else if (strcmp(buffer, "213") == 0)
     {
         printf("You have already logged in.\n");
     }
-    else if (strcmp(buff, "130") == 0)
+    else if (strcmp(buffer, "214") == 0)
+    {
+        printf("Logged in from another location.\n");
+    }
+    else if (strcmp(buffer, "130") == 0)
     {
         printf("Logged out successfully!\n");
     }
-    else if (strcmp(buff, "221") == 0)
+    else if (strcmp(buffer, "221") == 0)
     {
         printf("You are not logged in.\n");
     }
-    else if (strcmp(buff, "120") == 0)
+    else if (strcmp(buffer, "120") == 0)
     {
         printf("Message posted successfully!\n");
     }
-    else if (strcmp(buff, "300") == 0)
+    else if (strcmp(buffer, "300") == 0)
     {
         printf("Unknown request.\n");
     }
@@ -69,6 +75,29 @@ void handle_server_response()
         printf("Unknown error occurred.\n");
     }
 }
+
+void receive_response()
+{
+    memset(mess, 0, sizeof(mess));
+    memset(buff, 0, sizeof(buff));
+
+    while (strstr(mess, "\r\n") == NULL)
+    {
+        ssize_t bytes = recv(client_sock, buff, sizeof(buff), 0);
+        if (bytes < 0)
+        {
+            perror("recv() error");
+            break;
+        }
+        else if (bytes == 0)
+        {
+            printf("Connection closed by server.\n");
+            break;
+        }
+        strcat(mess, buff);
+    }
+    handle_server_response(mess);
+};
 
 /**
  * @brief Sets up the client socket and connects to the server.
@@ -98,16 +127,7 @@ void setup_socket(char *ip, char *port)
         exit(EXIT_FAILURE);
     }
 
-    received_bytes = recv(client_sock, buff, BUFF_SIZE, 0);
-    if (received_bytes < 0)
-    {
-        perror("recv() error");
-    }
-    else if (received_bytes == 0)
-    {
-        printf("Connection closed.\n");
-    }
-    handle_server_response();
+    receive_response();
 }
 
 /**
@@ -134,14 +154,7 @@ void log_in()
         return;
     }
 
-    // Receive server response
-    received_bytes = recv(client_sock, buff, BUFF_SIZE, 0);
-    if (received_bytes < 0)
-    {
-        perror("recv() error");
-        return;
-    }
-    handle_server_response();
+    receive_response();
 }
 
 /**
@@ -159,14 +172,7 @@ void log_out()
         return;
     }
 
-    // Receive server response
-    received_bytes = recv(client_sock, buff, BUFF_SIZE, 0);
-    if (received_bytes < 0)
-    {
-        perror("recv() error");
-        return;
-    }
-    handle_server_response();
+    receive_response();
 }
 
 /**
@@ -193,14 +199,7 @@ void post_message()
         return;
     }
 
-    // Receive server response
-    received_bytes = recv(client_sock, buff, BUFF_SIZE, 0);
-    if (received_bytes < 0)
-    {
-        perror("recv() error");
-        return;
-    }
-    handle_server_response();
+    receive_response();
 }
 
 /**
