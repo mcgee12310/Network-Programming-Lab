@@ -76,6 +76,12 @@ void handle_server_response(char *buffer)
     }
 }
 
+/**
+ * @brief Receives the server's response message.
+ * Reads data until the end-of-message sequence "\r\n" is detected.
+ * @param mess The buffer to store the complete response message.
+ * @param buff The temporary buffer for receiving data chunks.
+ */
 void receive_response()
 {
     memset(mess, 0, sizeof(mess));

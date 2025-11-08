@@ -4,6 +4,7 @@
     "socket.h": "c",
     "stdio.h": "c",
     "stdlib.h": "c",
-    "errno.h": "c"
+    "errno.h": "c",
+    "ioctl.h": "c"
   }
 }

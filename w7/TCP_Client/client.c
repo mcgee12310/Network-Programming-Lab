@@ -214,20 +214,6 @@ void post_message()
     receive_response();
 }
 
-void test_tcp()
-{
-    // This is a placeholder for potential test code.
-    char test_msg[] = "USER test_user\r\nPOST Hello, World!\r\nBYE\r\n";
-    sent_bytes = send(client_sock, test_msg, strlen(test_msg), 0);
-    if (sent_bytes < 0)
-    {
-        perror("send() error");
-        return;
-    }
-
-    receive_response();
-}
-
 /**
  * @brief Communicates with the server by displaying a menu and handling user commands.
  * @param cmd The command input buffer.
@@ -271,10 +257,6 @@ void communicate()
         case 4:
             printf("Goodbye...\n");
             return;
-
-        case 5:
-            test_tcp();
-            break;
 
         default:
             break;
